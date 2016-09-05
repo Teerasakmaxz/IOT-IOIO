@@ -1,7 +1,10 @@
 package com.example.maxz.ioio;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -25,6 +28,14 @@ public class MainActivity extends IOIOActivity {
         toggleButtonMOTOR1 = (ToggleButton) findViewById(R.id.toggleButton2);
         toggleButtonLED2 = (ToggleButton) findViewById(R.id.toggleButton3);
         toggleButtonMOTOR2 = (ToggleButton) findViewById(R.id.toggleButton4);
+        Button buttonSetting = (Button) findViewById(R.id.button4);
+        buttonSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Timesetting.class);
+                startActivity(intent);
+            }
+        });
 
 
     }//main mainhod
