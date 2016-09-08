@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Timesetting extends AppCompatActivity {
 
@@ -44,7 +45,7 @@ public class Timesetting extends AppCompatActivity {
 
     public void BtnOpen(View view) {
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute1 = calendar.get(Calendar.MINUTE);
 
@@ -70,7 +71,7 @@ public class Timesetting extends AppCompatActivity {
 
     public void BtnCloes(View view) {
 
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute1 = calendar.get(Calendar.MINUTE);
 
