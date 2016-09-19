@@ -29,7 +29,8 @@
                 android:id="@+id/toggleButton"
                 android:layout_weight="1"
                 android:textOff="LED1"
-                android:textOn="LED1 ON" />
+                android:textOn="LED1 ON"
+                android:checked="false" />
 
             <ToggleButton
                 android:layout_width="75dp"

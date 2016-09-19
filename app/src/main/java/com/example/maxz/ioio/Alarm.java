@@ -15,8 +15,8 @@ public class Alarm extends BroadcastReceiver {
 //        Timesetting timesetting = Timesetting.instance();
 //        timesetting.setAlarmText("Alarm! Wake up! Wake up!");
         MainActivity mainActivity = MainActivity.instance();
-        mainActivity.setAlarmText("ปลุกแล้ว");
-
+        mainActivity.kk = true;
+        mainActivity.setAlarm("ปลุกแล้ว");
 
     }
 }

@@ -12,14 +12,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import java.util.Calendar;
 import java.util.Locale;
+
 import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.exception.ConnectionLostException;
 import ioio.lib.util.BaseIOIOLooper;
 import ioio.lib.util.IOIOLooper;
 import ioio.lib.util.android.IOIOActivity;
-
 
 
 public class MainActivity extends IOIOActivity {
@@ -30,6 +31,9 @@ public class MainActivity extends IOIOActivity {
     ToggleButton toggleButtonMOTOR1;
     ToggleButton toggleButtonLED2;
     ToggleButton toggleButtonMOTOR2;
+
+    Boolean kk = false;
+
 
     TextView textView;
 
@@ -45,7 +49,7 @@ public class MainActivity extends IOIOActivity {
         toggleButtonMOTOR2 = (ToggleButton) findViewById(R.id.toggleButton4);
         Button buttonSetting = (Button) findViewById(R.id.button4);
         textView = (TextView) findViewById(R.id.textView3);
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        final Calendar calendar = Calendar.getInstance(Locale.getDefault());
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute1 = calendar.get(Calendar.MINUTE);
 
@@ -61,9 +65,15 @@ public class MainActivity extends IOIOActivity {
                         calendar1.set(Calendar.MINUTE, minute);
                         calendar1.set(Calendar.SECOND, 0);
                         calendar1.set(Calendar.MILLISECOND, 0);
-                        textView.setText(hourOfDay+":"+minute);
 
+                        if (minute <10 && hourOfDay <10) {
 
+                            textView.setText("0"+hourOfDay + ":0" + minute);
+
+                        } else if (minute <10){
+
+                            textView.setText(hourOfDay + ":0" + minute);
+                        }
                         setAlarm(calendar1);
                     }
                 }, hour, minute1, true);
@@ -79,12 +89,12 @@ public class MainActivity extends IOIOActivity {
 
         @Override
         protected void setup() throws ConnectionLostException, InterruptedException {
-            //super.setup();
 
-            LED1 = ioio_.openDigitalOutput(1,true );
-            MOTOR1 = ioio_.openDigitalOutput(2,true);
-            LED2 = ioio_.openDigitalOutput(3,true);
-            MOTOR2 = ioio_.openDigitalOutput(4,true);
+
+            LED1 = ioio_.openDigitalOutput(1, false);
+            MOTOR1 = ioio_.openDigitalOutput(2, false);
+            LED2 = ioio_.openDigitalOutput(3, false);
+            MOTOR2 = ioio_.openDigitalOutput(4, false);
 
             runOnUiThread(new Runnable() {
                 @Override
@@ -96,14 +106,16 @@ public class MainActivity extends IOIOActivity {
 
         @Override
         public void loop() throws ConnectionLostException, InterruptedException {
-            //super.loop();
-
 
             LED1.write(!toggleButtonLED1.isChecked());
+            LED1.write(!kk);
             MOTOR1.write(!toggleButtonMOTOR1.isChecked());
+            MOTOR1.write(!kk);
             LED2.write(!toggleButtonLED2.isChecked());
+            LED2.write(!kk);
             MOTOR2.write(!toggleButtonMOTOR2.isChecked());
-            LED1.write(!toggleButtonLED1.isChecked());
+            MOTOR2.write(!kk);
+
 
         }
     }//Looper
@@ -113,9 +125,10 @@ public class MainActivity extends IOIOActivity {
         return new Looper();
     }
 
-    public void setAlarmText(String alarmText) {
-       textView.setText(alarmText);
+    public void setAlarm(String alarm) {
+        Toast.makeText(MainActivity.this,alarm,Toast.LENGTH_SHORT).show();
     }
+
 
     public static MainActivity instance() {
         return instance;
@@ -135,4 +148,5 @@ public class MainActivity extends IOIOActivity {
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarm.getTimeInMillis(), pendingIntent);
 
     }
+//
 }//class main
